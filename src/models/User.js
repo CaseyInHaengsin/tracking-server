@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
   }
 })
 
-userSchema.pre('save', function(){
+userSchema.pre('save', function(next){
   const user = this;
   if (!user.isModified('password')){
     return next()
@@ -21,7 +21,7 @@ userSchema.pre('save', function(){
     if (err){
       return next(err);
     }
-    bcrypt.hash(user.password, salt, (err) => {
+    bcrypt.hash(user.password, salt, (err, hash) => {
       if (err){
         return next(err);
       }
