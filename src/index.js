@@ -30,7 +30,7 @@ mongoose.connection.on('error', (err) => {
 app.get('/', requireAuth, (req, res) => {
   
   console.log('requested')  
-  res.send('hi there!');
+  res.send(`Your email: ${req.user.email}`);
 
 })
 
