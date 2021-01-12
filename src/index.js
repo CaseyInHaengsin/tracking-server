@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/authRoutes');
-
+const requireAuth = require('./middlewares/requireAuth');
 const app = express();
 
 app.use(bodyParser.json())
@@ -27,11 +27,12 @@ mongoose.connection.on('error', (err) => {
     console.log(`Error connecting to mongo`, err);
 })
 
-app.get('/', (req, res) => {
+app.get('/', requireAuth, (req, res) => {
+  
   console.log('requested')  
   res.send('hi there!');
-})
 
+})
 
 app.listen(3000, () => {
     console.log('listening on port 3000')
