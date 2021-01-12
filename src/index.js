@@ -1,12 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
+
+const bodyParser = require('body-parser');
 const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
+app.use(bodyParser.json())
+app.use(authRoutes);
 
-app.use(authRoutes)
+
 
 const mongoURI = process.env.MONGOURI;
 
@@ -24,7 +28,8 @@ mongoose.connection.on('error', (err) => {
 })
 
 app.get('/', (req, res) => {
-    res.send('hi there!');
+  console.log('requested')  
+  res.send('hi there!');
 })
 
 
